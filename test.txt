@@ -1,0 +1,14 @@
+
+@startuml
+left to right direction
+(start)	--> (0)
+(0) --> (1) : <&arrow-top> Go_up
+(1) --> (2) : <&arrow-bottom> dn
+(2) --> (3) : <&arrow-top> up
+(3) --> (4) : <&arrow-bottom> Go_up
+(4) --> (5) : <&arrow-top> Go_dn
+(5) --> (6) : <&arrow-bottom> up
+(6) --> (7) : <&arrow-top> dn
+(7) --> (8) : <&arrow-bottom> up
+(8) --> (0) : <&arrow-top> Go_dn
+@enduml

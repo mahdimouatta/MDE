@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+(2) --> (Ord: Go_dn\n....\nInh: Go_up) : <&arrow-top>up  false
+(Ord: Go_dn\n....\nInh: Go_up) --> (6) : <&arrow-bottom>up  false
+(6) --> (7) : <&arrow-top>dn  false
+(7) --> (Ord: Go_up\n....\nInh: null) : <&arrow-bottom>up  false
+(Ord: Go_up\n....\nInh: null) --> (2) : <&arrow-bottom>dn  false
+@enduml
