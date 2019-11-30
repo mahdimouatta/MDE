@@ -17,7 +17,8 @@ public class Infos {
 		String a = inf1==null? node1.toString() : inf1.toString();
 		String b =(inf2==null? node2.toString() : inf2.toString());
 		return  a + " --> " + b + " : "
-				+ direction + liaison + "  " + start;
+				+ direction + liaison ;
+		//+ "  " + start;
 	}
 
 	
