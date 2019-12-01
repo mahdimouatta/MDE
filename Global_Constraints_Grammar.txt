@@ -1,0 +1,21 @@
+grammar ma.ensias.mde.gc.GC with org.eclipse.xtext.common.Terminals
+
+generate gC 'http://www.ensias.ma/mde/gc/GC'
+
+Domainmodel:
+	(ligne+=Ligne)*;
+
+Ligne:
+	(condition=Condition operation=Operation);
+
+Plus:
+	{Plus} ('and' | 'or') 	('not')? ('free' | 'Eject' | 'wpa2' | 'ok' | 'epb');
+
+Condition:
+	{Condition} 'If' 	('not')? ('free' | 'Eject' | 'wpa2' | 'ok' | 'epb') (plus+=Plus)*;
+
+
+
+Operation:
+	{Operation} 'Then' ('Ord' | 'Inh') '(' ('Go_up' | 'Go_dn') ')';
+	
