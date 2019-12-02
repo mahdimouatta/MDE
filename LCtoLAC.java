@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -7,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.SpringLayout.Constraints;
+
 public class LCtoLAC {
 	private static String up = "<&arrow-top>";
-	//private static String down = "<&arrow-bottom>";
+	// private static String down = "<&arrow-bottom>";
 
 	private static BufferedReader bufRead;
 
@@ -96,16 +96,13 @@ public class LCtoLAC {
 	 *            type Infos will be used to define the two nodes to merge
 	 * @return out of type InfosLAC containing the new node, only the node
 	 */
-	/*private static InfosLAC merge(Infos info) {
-		InfosLAC out = new InfosLAC(null, null);
-		if (info.getDirection().equals(up)) {
-			out.setOrd(info.getLiaison());
-		} else {
-			out.setInh(info.getLiaison());
-		}
-
-		return out;
-	}*/
+	/*
+	 * private static InfosLAC merge(Infos info) { InfosLAC out = new
+	 * InfosLAC(null, null); if (info.getDirection().equals(up)) {
+	 * out.setOrd(info.getLiaison()); } else { out.setInh(info.getLiaison()); }
+	 * 
+	 * return out; }
+	 */
 
 	/*
 	 * while the list isn't in its final state which means there are more nodes
@@ -270,16 +267,14 @@ public class LCtoLAC {
 	 * 
 	 * @return node1 the previous node
 	 */
-	/*private static List<Infos> find1stNode(Object node2, List<Infos> infos) {
-		List<Infos> out = new ArrayList<Infos>();
-		for (int i = 0; i < infos.size(); i++) {
-			if (infos.get(i).getNode2().equals(node2)) {
-				out.add(infos.get(i));
-			}
-		}
-
-		return out;
-	}*/
+	/*
+	 * private static List<Infos> find1stNode(Object node2, List<Infos> infos) {
+	 * List<Infos> out = new ArrayList<Infos>(); for (int i = 0; i <
+	 * infos.size(); i++) { if (infos.get(i).getNode2().equals(node2)) {
+	 * out.add(infos.get(i)); } }
+	 * 
+	 * return out; }
+	 */
 
 	/**
 	 * check if the line contains needed infos, and by that I mean 2 nodes, the
@@ -316,7 +311,7 @@ public class LCtoLAC {
 				// Sys)tem.out.println(line);
 				if (hasInfos(line)) {
 					lines.add(line);
-					System.out.println(line);
+					// System.out.println(line);
 				}
 			}
 		} catch (Exception e) {
@@ -453,7 +448,7 @@ public class LCtoLAC {
 		String header2 = "left to right direction";
 		String footer = "@enduml";
 		try {
-			writer = new FileWriter("output.txt");
+			writer = new FileWriter("src/output.txt");
 			writer.write(header1 + System.lineSeparator());
 			writer.write(header2 + System.lineSeparator());
 			for (int i = 0; i < lines.size(); i++) {
@@ -487,11 +482,11 @@ public class LCtoLAC {
 	 * @return void
 	 */
 
-	private static void process(String inputFile) {
-		
-		List<String> lines = readLines("src/"+inputFile);
+	private static List<Infos> process(String inputFile) {
+
+		List<String> lines = readLines("src/" + inputFile);
 		List<Infos> infos = extractInfos(lines);
-		findStart(infos, "src/"+inputFile);
+		findStart(infos, "src/" + inputFile);
 
 		/*
 		 * for (int i = 0; i < infos.size(); i++) {
@@ -507,13 +502,113 @@ public class LCtoLAC {
 
 		writeToFile(xy);
 
+		return xy;
+	}
+
+	private static List<Constraint> parseGC(String name) {
+		List<Constraint> a = new ArrayList<Constraint>();
+		
+		String line = null;
+
+		try {
+			FileReader input = new FileReader(name);
+			bufRead = new BufferedReader(input);
+			while ((line = bufRead.readLine()) != null) {
+				Constraint constraint = new Constraint();
+				String[] s1 =null;
+				String[] s2 =null;
+				s1=line.split(" Then ");
+				s2 = s1[0].split("If ");
+				constraint.setContrainte(s2[1]);
+				constraint.setOrdInh(s1[1]);
+				a.add(constraint);
+				//System.out.println(constraint);				
+			}
+			return a;
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return a;
+
+	}
+
+	private static void LACtoDC(List<Infos> liste, List<Constraint> contraintes) {
+		for (int i = 0; i < liste.size(); i++) {
+			for (Constraint c : contraintes) {
+				if (liste.get(i).getInf1() != null) {
+					System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121 " +c.getOrdInh()));
+					//System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121 " +c.getOrdInh()));
+					System.out.println(10);
+					if (("Inh: "+liste.get(i).getInf1().getInh()).equals(c.getOrdInh())) {
+						System.out.println(11);
+						System.out.println(11);
+						liste.get(i)
+								.getInf1()
+								.setInh(liste.get(i).getInf1().getInh()
+										+ "\\n If : " + c.getContrainte());
+					}
+					if (("Ord: "+liste.get(i).getInf1().getOrd()).equals(c.getOrdInh())) {
+						System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121" +c.getOrdInh()));
+						System.out.println(13);
+						liste.get(i)
+								.getInf1()
+								.setOrd(liste.get(i).getInf1().getOrd()
+										+ "\\n If : " + c.getContrainte().replace("(","<&chevron-left>").replace(")","<&chevron-right>").replace("up", "<&arrow-top>").replace("or", "<&chevron-bottom>").replace("and", "<&chevron-top>").replace("->", "<&arrow-right>")+"");
+					} 
+				}
+			}
+		}
+
+		writeToFile2(liste);
+	}
+
+	private static void writeToFile2(List<Infos> lines) {
+		FileWriter writer;
+		String header1 = "@startuml";
+		String header2 = "left to right direction";
+		String footer = "@enduml";
+		try {
+			writer = new FileWriter("src/outputDC.txt");
+			writer.write(header1 + System.lineSeparator());
+			writer.write(header2 + System.lineSeparator());
+			for (int i = 0; i < lines.size(); i++) {
+				if (lines.get(i).isStart()) {
+					System.out.println(1532496);
+					String a = "(start) --> ";
+					a += lines.get(i).getInf1().toString() == null ? lines
+							.get(i).getNode1().toString() : lines.get(i)
+							.getInf1().toString();
+					System.out.println(a);
+					writer.write(a + System.lineSeparator());
+				}
+				String str = lines.get(i).toString();
+				writer.write(str + System.lineSeparator());
+			}
+			writer.write(footer + System.lineSeparator());
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void main(String[] args) {
-		/*File file = new File("src.");
-		for(String fileNames : file.list()) System.out.println(fileNames);
-		*/
-		process("test.txt");
+		/*
+		 * File file = new File("/"); for(String fileNames : file.list())
+		 * System.out.println(fileNames);
+		 */
+		List<Constraint> contraintes = parseGC("src/constraints.gc");
+	
+		  //for(Constraint a : contraintes){ System.out.println("a " +a);}
+		 
+		List<Infos> liste = process("input.txt");
+		/*
+		 * for(Infos i : liste){ System.out.println("i " + i); }
+		 */
+		LACtoDC(liste, contraintes);
 
 	}
 }

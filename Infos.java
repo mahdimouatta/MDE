@@ -1,4 +1,5 @@
 
+
 public class Infos {
 	private InfosLAC inf1;
 	private InfosLAC inf2;

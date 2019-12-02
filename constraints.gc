@@ -1,0 +1,2 @@
+If ( ( not ok and ( not Eject ) ) or ( ( ( ok ) and ( Eject ) ) -> up ebp ) ) Then Ord: Go_dn
+If ( free and ( not Eject ) or ( wpa2 ) ) Then Ord: Go_up

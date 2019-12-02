@@ -2,8 +2,7 @@
 left to right direction
 (2) --> (Ord: Go_dn\n....\nInh: Go_up) : <&arrow-top>up
 (Ord: Go_dn\n....\nInh: Go_up) --> (6) : <&arrow-bottom>up
-(6) --> (7) : <&arrow-top>dn
-(7) --> (Ord: Go_up\n....\nInh: Go_dn) : <&arrow-bottom>up
+(6) --> (Ord: Go_up\n....\nInh: Go_dn) : <&arrow-top>dn
 (start) --> (Ord: Go_up\n....\nInh: Go_dn)
 (Ord: Go_up\n....\nInh: Go_dn) --> (2) : <&arrow-bottom>dn
 @enduml

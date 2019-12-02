@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+(2) --> (Ord: Go_dn\n If : <&chevron-left> <&chevron-left> not ok <&chevron-top> <&chevron-left> not Eject <&chevron-right> <&chevron-right> <&chevron-bottom> <&chevron-left> <&chevron-left> <&chevron-left> ok <&chevron-right> <&chevron-top> <&chevron-left> Eject <&chevron-right> <&chevron-right> <&arrow-right> <&arrow-top> ebp <&chevron-right> <&chevron-right>\n....\nInh: Go_up) : <&arrow-top>up
+(Ord: Go_dn\n If : <&chevron-left> <&chevron-left> not ok <&chevron-top> <&chevron-left> not Eject <&chevron-right> <&chevron-right> <&chevron-bottom> <&chevron-left> <&chevron-left> <&chevron-left> ok <&chevron-right> <&chevron-top> <&chevron-left> Eject <&chevron-right> <&chevron-right> <&arrow-right> <&arrow-top> ebp <&chevron-right> <&chevron-right>\n....\nInh: Go_up) --> (6) : <&arrow-bottom>up
+(6) --> (Ord: Go_up\n If : <&chevron-left> free <&chevron-top> <&chevron-left> not Eject <&chevron-right> <&chevron-bottom> <&chevron-left> wpa2 <&chevron-right> <&chevron-right>\n....\nInh: Go_dn) : <&arrow-top>dn
+(start) --> (Ord: Go_up\n If : <&chevron-left> free <&chevron-top> <&chevron-left> not Eject <&chevron-right> <&chevron-bottom> <&chevron-left> wpa2 <&chevron-right> <&chevron-right>\n....\nInh: Go_dn)
+(Ord: Go_up\n If : <&chevron-left> free <&chevron-top> <&chevron-left> not Eject <&chevron-right> <&chevron-bottom> <&chevron-left> wpa2 <&chevron-right> <&chevron-right>\n....\nInh: Go_dn) --> (2) : <&arrow-bottom>dn
+@enduml
