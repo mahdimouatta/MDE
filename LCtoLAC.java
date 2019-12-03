@@ -477,9 +477,10 @@ public class LCtoLAC {
 	 * given the file name, it transforms the file into an LAC model, which can
 	 * be transformed to a graph using plantUML.
 	 * 
-	 * @param inputFile name of the inputFile
+	 * @param String name of the inputFile
 	 * 
-	 * @return void
+	 * @return List<Infos> the list of informations at the end of the LC to LAC
+	 * transformation
 	 */
 
 	private static List<Infos> process(String inputFile) {
@@ -505,9 +506,17 @@ public class LCtoLAC {
 		return xy;
 	}
 
+	/*
+	 * given the file name, it parses the global constraints file and extract
+	 * the informations needed.
+	 * 
+	 * @param String name of the inputFile
+	 * 
+	 * @return List<Constraint> list of constraints
+	 */
 	private static List<Constraint> parseGC(String name) {
 		List<Constraint> a = new ArrayList<Constraint>();
-		
+
 		String line = null;
 
 		try {
@@ -515,18 +524,17 @@ public class LCtoLAC {
 			bufRead = new BufferedReader(input);
 			while ((line = bufRead.readLine()) != null) {
 				Constraint constraint = new Constraint();
-				String[] s1 =null;
-				String[] s2 =null;
-				s1=line.split(" Then ");
+				String[] s1 = null;
+				String[] s2 = null;
+				s1 = line.split(" Then ");
 				s2 = s1[0].split("If ");
 				constraint.setContrainte(s2[1]);
 				constraint.setOrdInh(s1[1]);
 				a.add(constraint);
-				//System.out.println(constraint);				
+				// System.out.println(constraint);
 			}
 			return a;
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -534,36 +542,96 @@ public class LCtoLAC {
 
 	}
 
-	private static void LACtoDC(List<Infos> liste, List<Constraint> contraintes) {
+	/*
+	 * given the list of global constraints and the LAC Model it transforms them
+	 * to a DC model.
+	 * 
+	 * @param List<Infos> the list of LAC model elements.
+	 * 
+	 * @param List<Constraint> the list of the global constraints.
+	 * 
+	 * @return List<Infos> the list of DC model elements.
+	 */
+	private static List<Infos> LACtoDC(List<Infos> liste, List<Constraint> contraintes) {
 		for (int i = 0; i < liste.size(); i++) {
 			for (Constraint c : contraintes) {
 				if (liste.get(i).getInf1() != null) {
-					System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121 " +c.getOrdInh()));
-					//System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121 " +c.getOrdInh()));
+					liste.get(i).getInf1().setDc(true);
+					System.out.println(("Ord: "
+							+ liste.get(i).getInf1().getOrd() + "    121 " + c
+							.getOrdInh()));
+					// System.out.println(("Ord: "+liste.get(i).getInf1().getOrd()
+					// + "    121 " +c.getOrdInh()));
 					System.out.println(10);
-					if (("Inh: "+liste.get(i).getInf1().getInh()).equals(c.getOrdInh())) {
+					if (("Inh: " + liste.get(i).getInf1().getInh()).equals(c
+							.getOrdInh())) {
 						System.out.println(11);
 						System.out.println(11);
 						liste.get(i)
 								.getInf1()
-								.setInh(liste.get(i).getInf1().getInh()
-										+ "\\n If : " + c.getContrainte());
+								.setCondInh(
+										"\\n If : "
+												+ c.getContrainte()
+														.replace("(",
+																"<&chevron-left>")
+														.replace(")",
+																"<&chevron-right>")
+														.replace("up",
+																"<&arrow-top>")
+														.replace("or",
+																"<&chevron-bottom>")
+														.replace("and",
+																"<&chevron-top>")
+														.replace("->",
+																"<&arrow-right>")
+														.replace("not", "¬")
+												+ "");
 					}
-					if (("Ord: "+liste.get(i).getInf1().getOrd()).equals(c.getOrdInh())) {
-						System.out.println(("Ord: "+liste.get(i).getInf1().getOrd() + "    121" +c.getOrdInh()));
+					if (("Ord: " + liste.get(i).getInf1().getOrd()).equals(c
+							.getOrdInh())) {
+						System.out
+								.println(("Ord: "
+										+ liste.get(i).getInf1().getOrd()
+										+ "    121" + c.getOrdInh()));
 						System.out.println(13);
 						liste.get(i)
 								.getInf1()
-								.setOrd(liste.get(i).getInf1().getOrd()
-										+ "\\n If : " + c.getContrainte().replace("(","<&chevron-left>").replace(")","<&chevron-right>").replace("up", "<&arrow-top>").replace("or", "<&chevron-bottom>").replace("and", "<&chevron-top>").replace("->", "<&arrow-right>")+"");
-					} 
+								.setCondOrd(
+										"\\n If : "
+												+ c.getContrainte()
+														.replace("(",
+																"<&chevron-left>")
+														.replace(")",
+																"<&chevron-right>")
+														.replace("up",
+																"<&arrow-top>")
+														.replace("or",
+																"<&chevron-bottom>")
+														.replace("and",
+																"<&chevron-top>")
+														.replace("->",
+																"<&arrow-right>")
+														.replace("not", "¬")
+												+ "");
+					}
 				}
 			}
 		}
 
 		writeToFile2(liste);
+		
+		return liste;
 	}
 
+	/**
+	 * given a list of Infos it uses them to write into a file named
+	 * "outputDC.text" in the right format.
+	 * 
+	 * @param lines
+	 *            a list of Infos.
+	 * @return void
+	 */
+	
 	private static void writeToFile2(List<Infos> lines) {
 		FileWriter writer;
 		String header1 = "@startuml";
@@ -601,14 +669,14 @@ public class LCtoLAC {
 		 * System.out.println(fileNames);
 		 */
 		List<Constraint> contraintes = parseGC("src/constraints.gc");
-	
-		  //for(Constraint a : contraintes){ System.out.println("a " +a);}
-		 
+
+		// for(Constraint a : contraintes){ System.out.println("a " +a);}
+
 		List<Infos> liste = process("input.txt");
 		/*
 		 * for(Infos i : liste){ System.out.println("i " + i); }
 		 */
-		LACtoDC(liste, contraintes);
+		List<Infos> listeDC =LACtoDC(liste, contraintes);
 
 	}
 }
