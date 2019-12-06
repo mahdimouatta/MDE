@@ -57,7 +57,7 @@ public class LCtoLAC {
 				}
 			} else {
 				if (info.getInf2() == null) {
-					System.out.println(info.getNode2());
+					// System.out.println(info.getNode2());
 					infoOut = find2ndNode(info.getNode2(), infos).get(0);
 					out.setOrd(info.getLiaison());
 					out.setInh(info.getInf1().getInh());
@@ -147,6 +147,7 @@ public class LCtoLAC {
 
 			}
 			if (k) {
+				// if(infos.get(j).getInf1()!=null)
 				infos.get(j).setInf2(infos.get(j + 1).getInf1());
 			}
 		}
@@ -453,14 +454,14 @@ public class LCtoLAC {
 			writer.write(header2 + System.lineSeparator());
 			for (int i = 0; i < lines.size(); i++) {
 				if (lines.get(i).isStart()) {
-					System.out.println(1532496);
 					String a = "(start) --> ";
 					a += lines.get(i).getInf1().toString() == null ? lines
 							.get(i).getNode1().toString() : lines.get(i)
 							.getInf1().toString();
-					System.out.println(a);
 					writer.write(a + System.lineSeparator());
 				}
+			}
+			for (int i = 0; i < lines.size(); i++) {
 				String str = lines.get(i).toString();
 				writer.write(str + System.lineSeparator());
 			}
@@ -552,21 +553,22 @@ public class LCtoLAC {
 	 * 
 	 * @return List<Infos> the list of DC model elements.
 	 */
-	private static List<Infos> LACtoDC(List<Infos> liste, List<Constraint> contraintes) {
+	private static List<Infos> LACtoDC(List<Infos> liste,
+			List<Constraint> contraintes) {
 		for (int i = 0; i < liste.size(); i++) {
 			for (Constraint c : contraintes) {
 				if (liste.get(i).getInf1() != null) {
 					liste.get(i).getInf1().setDc(true);
-					System.out.println(("Ord: "
-							+ liste.get(i).getInf1().getOrd() + "    121 " + c
-							.getOrdInh()));
+					// System.out.println(("Ord: "
+					// + liste.get(i).getInf1().getOrd() + "    121 " + c
+					// .getOrdInh()));
 					// System.out.println(("Ord: "+liste.get(i).getInf1().getOrd()
 					// + "    121 " +c.getOrdInh()));
-					System.out.println(10);
+					// System.out.println(10);
 					if (("Inh: " + liste.get(i).getInf1().getInh()).equals(c
 							.getOrdInh())) {
-						System.out.println(11);
-						System.out.println(11);
+						// System.out.println(11);
+						// System.out.println(11);
 						liste.get(i)
 								.getInf1()
 								.setCondInh(
@@ -584,16 +586,16 @@ public class LCtoLAC {
 																"<&chevron-top>")
 														.replace("->",
 																"<&arrow-right>")
-														.replace("not", "�")
+														.replace("not", "¬")
 												+ "");
 					}
 					if (("Ord: " + liste.get(i).getInf1().getOrd()).equals(c
 							.getOrdInh())) {
-						System.out
-								.println(("Ord: "
-										+ liste.get(i).getInf1().getOrd()
-										+ "    121" + c.getOrdInh()));
-						System.out.println(13);
+						// System.out
+						// .println(("Ord: "
+						// + liste.get(i).getInf1().getOrd()
+						// + "    121" + c.getOrdInh()));
+						// System.out.println(13);
 						liste.get(i)
 								.getInf1()
 								.setCondOrd(
@@ -611,7 +613,7 @@ public class LCtoLAC {
 																"<&chevron-top>")
 														.replace("->",
 																"<&arrow-right>")
-														.replace("not", "�")
+														.replace("not", "¬")
 												+ "");
 					}
 				}
@@ -619,7 +621,7 @@ public class LCtoLAC {
 		}
 
 		writeToFile2(liste);
-		
+
 		return liste;
 	}
 
@@ -631,8 +633,9 @@ public class LCtoLAC {
 	 *            a list of Infos.
 	 * @return void
 	 */
-	
+
 	private static void writeToFile2(List<Infos> lines) {
+
 		FileWriter writer;
 		String header1 = "@startuml";
 		String header2 = "left to right direction";
@@ -643,18 +646,191 @@ public class LCtoLAC {
 			writer.write(header2 + System.lineSeparator());
 			for (int i = 0; i < lines.size(); i++) {
 				if (lines.get(i).isStart()) {
-					System.out.println(1532496);
+					// System.out.println(1532496);
 					String a = "(start) --> ";
 					a += lines.get(i).getInf1().toString() == null ? lines
 							.get(i).getNode1().toString() : lines.get(i)
 							.getInf1().toString();
-					System.out.println(a);
+					// System.out.println(a);
 					writer.write(a + System.lineSeparator());
 				}
+			}
+			for (int i = 0; i < lines.size(); i++) {
 				String str = lines.get(i).toString();
 				writer.write(str + System.lineSeparator());
 			}
 			writer.write(footer + System.lineSeparator());
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/*
+	 * given the infos needed to create a link and a list of links it creates a
+	 * Link and add it to the list
+	 * 
+	 * @param list List<Link> the list of links.
+	 * 
+	 * @param from (int) the start node.
+	 * 
+	 * @param to (int) the end node.
+	 * 
+	 * @param text (String) the text on the link.
+	 * 
+	 * @return void.
+	 */
+	private static void addLink(int from, int to, String text, List<Link> list) {
+		Link link = new Link(from, to, text.replace("<&chevron-left>", "(")
+				.replace("<&chevron-right>", ")").replace("<&arrow-top>", "↑")
+				.replace("<&chevron-bottom>", "∨")
+				.replace("<&chevron-top>", "∧").replace("<&arrow-right>", "→")
+				.replace("<&arrow-top>", "↑").replace("<&arrow-bottom>", "↓")
+				+ "");
+		list.add(link);
+	}
+
+	/*
+	 * given the infos needed to create a Node and a list of Nodes it creates a
+	 * Node and add it to the list
+	 * 
+	 * @param list List<Grafcet> the list of links.
+	 * 
+	 * @param key (int) the node key.
+	 * 
+	 * @param x (int) the horizontal position.
+	 * 
+	 * @param y (int) the vertical position.
+	 * 
+	 * @param text (String) the text on the node.
+	 * 
+	 * @return void.
+	 */
+	private static void addNode(int key, int x, int y, String text,
+			List<Grafcet> list) {
+		Grafcet grafcet = new Grafcet(key, x, y, text);
+		list.add(grafcet);
+	}
+
+	/*
+	 * given the list the DC model elements, it transforms them to a grafcet.
+	 * 
+	 * @param List<Infos> the list of DC model elements.
+	 * 
+	 * @return GrafcetOut an object with a list of Nodes and a list of Links.
+	 */
+	private static GrafcetOut DCtoGrafcet(List<Infos> liste) { // TODO : a
+																// verifier
+		List<Grafcet> out = new ArrayList<Grafcet>();
+		List<Link> links = new ArrayList<Link>();
+		int count = 0;
+		int x = 500;
+		int y = 50;
+		int n = liste.size();
+		for (Infos inf : liste) {
+			if (inf.getInf2() != null) {
+				if (inf.getInf2().getCondOrd().equals("\\nIf : --")) {
+					addLink(count, count + 1,
+							inf.getDirection() + inf.getLiaison(), links);
+					addNode(count, x, y, inf.getInf2().getOrd() + " = 0", out);
+					y += 50;
+					// count += 1;
+					if (inf.getInf2().getCondInh().equals("\\nIf : --")) {
+						addLink(count + 1, count + 2,
+								inf.getDirection() + inf.getLiaison(), links);
+						addNode(count + 1, x, y, inf.getInf2().getInh()
+								+ " = 0", out);
+						y += 50;
+						count += 1;
+					} else {
+						addLink(count + 1,
+								count + 2,
+								inf.getInf2().getCondInh().toString()
+										.replace("\\n If : ", ""), links);
+						addNode(count + 1, x, y, inf.getInf2().getInh()
+								+ " = 1", out);
+						y += 50;
+						count += 1;
+					}
+				} else {
+					addLink(count, count + 1, inf.getInf2().getCondOrd()
+							.toString().replace("\\n If : ", ""), links);
+					addNode(count, x, y, inf.getInf2().getOrd() + " = 1", out);
+					y += 50;
+					// count += 1;
+					if (inf.getInf2().getCondInh().equals("\\nIf : --")) {
+						addLink(count + 1, count + 2,
+								inf.getDirection() + inf.getLiaison(), links);
+						addNode(count + 1, x, y, inf.getInf2().getInh()
+								+ " = 0", out);
+						y += 50;
+						count += 1;
+					} else {
+						addLink(count + 1,
+								count + 2,
+								inf.getInf2().getCondInh().toString()
+										.replace("\\n If : ", ""), links);
+						addNode(count + 1, x, y, inf.getInf2().getInh()
+								+ " = 1", out);
+						y += 50;
+						count += 1;
+					}
+				}
+				count++;
+
+			} else {
+				addLink(count, count + 1,
+						inf.getDirection() + inf.getLiaison(), links);
+				addNode(count, x, y, "", out);
+				y += 50;
+				count += 1;
+			}
+		}
+		links.get(links.size() - 1).setSkip(true);
+		links.get(links.size() - 1).setTo(0);
+
+		return new GrafcetOut(out, links);
+
+	}
+
+	/**
+	 * given an object GrafcetOut containing a list of Nodes and a list of Links
+	 * it uses them to write into a file named "outputG.json" understood by
+	 * gojs.
+	 * 
+	 * @param lines
+	 *            GrafcetOut an object with a list of Nodes and a list of Links,
+	 * @return void
+	 */
+
+	private static void writeToFile3(GrafcetOut lines) {
+
+		FileWriter writer;
+		String header1 = "{\"class\": \"go.GraphLinksModel\",";
+		String header2 = "\"nodeDataArray\": [";
+		String header3 = "\"linkDataArray\": [";
+		try {
+			writer = new FileWriter("src/outputG.json");
+			writer.write(header1 + System.lineSeparator());
+			writer.write(header2 + System.lineSeparator());
+			for (int i = 0; i < lines.grafs.size() - 1; i++) {
+				String str = lines.grafs.get(i).toString();
+				writer.write(str + "," + System.lineSeparator());
+			}
+
+			writer.write(lines.grafs.get(lines.grafs.size() - 1).toString()
+					+ System.lineSeparator());
+			writer.write("]," + System.lineSeparator());
+			writer.write(header3 + System.lineSeparator());
+			for (int i = 0; i < lines.links.size() - 1; i++) {
+				String str = lines.links.get(i).toString();
+				writer.write(str + ',' + System.lineSeparator());
+			}
+			writer.write(lines.links.get(lines.links.size() - 1).toString()
+					+ System.lineSeparator());
+			writer.write("]}" + System.lineSeparator());
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -668,15 +844,20 @@ public class LCtoLAC {
 		 * File file = new File("/"); for(String fileNames : file.list())
 		 * System.out.println(fileNames);
 		 */
-		List<Constraint> contraintes = parseGC("src/constraints.gc");
 
 		// for(Constraint a : contraintes){ System.out.println("a " +a);}
 
 		List<Infos> liste = process("input.txt");
+
+		List<Constraint> contraintes = parseGC("src/constraints.gc");
 		/*
 		 * for(Infos i : liste){ System.out.println("i " + i); }
 		 */
-		List<Infos> listeDC =LACtoDC(liste, contraintes);
+		List<Infos> listeDC = LACtoDC(liste, contraintes);
+
+		GrafcetOut grafcets = DCtoGrafcet(listeDC);
+
+		writeToFile3(grafcets);
 
 	}
 }
