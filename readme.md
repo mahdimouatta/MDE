@@ -18,4 +18,4 @@ the another the DC is transformed to a Grafcet.
 ![DC](https://github.com/mmouatta/MDE/blob/master/images/Grafcet.PNG)
 ## Illustration of the DC synthesis for elevator subsystem
 
-![Illustration of the DC synthesis for elevator subsystem](https://github.com/mmouatta/MDE/blob/master/images/LCtoDC.png)
+![Illustration of the DC synthesis for elevator subsystem](https://github.com/mmouatta/MDE/blob/master/images/LCtoDC.PNG)
