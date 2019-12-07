@@ -1,11 +1,11 @@
 # MDE : Model Driven engineering 
 ## Project description
 the global schema of the project
-![Project Description](https://github.com/mmouatta/MDE/tree/master/images/ProjectDescription.png)
+![Project Description][https://github.com/mmouatta/MDE/tree/master/images/ProjectDescription.png]
 
 The Local Controller is represented with plantUML.
 
-![LC](images/LC.png)
+![LC][images/LC.png]
 the the LC is transformed to a Local Aggregated Controller LAC.
 the LAC is also represented with plantUML.
 ![LAC](images/LAC.png)
