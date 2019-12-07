@@ -5,7 +5,7 @@ the global schema of the project
 
 The Local Controller is represented with plantUML.
 
-![LC][https://github.com/mmouatta/MDE/blob/master/images/LC.PNG]
+![LC](https://github.com/mmouatta/MDE/blob/master/images/LC.PNG)
 the the LC is transformed to a Local Aggregated Controller LAC.
 the LAC is also represented with plantUML.
 ![LAC](https://github.com/mmouatta/MDE/blob/master/images/LAC.PNG)
