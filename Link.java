@@ -14,7 +14,7 @@ public class Link {
 			this.from = from;
 			this.to = to;
 			this.text = text;
-			this.skip = from>to ? true :false;
+			this.skip = false;
 		}
 
 		@Override

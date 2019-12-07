@@ -730,54 +730,57 @@ public class LCtoLAC {
 		int y = 50;
 		int n = liste.size();
 		for (Infos inf : liste) {
-			if (inf.getInf2() != null) {
-				if (inf.getInf2().getCondOrd().equals("\\nIf : --")) {
+			if (inf.getInf1() != null) {
+				if (inf.getInf1().getCondOrd().equals("\\nIf : --")) {
 					addLink(count, count + 1,
 							inf.getDirection() + inf.getLiaison(), links);
-					addNode(count, x, y, inf.getInf2().getOrd() + " = 0", out);
-					y += 50;
+//					y += 50;
 					// count += 1;
-					if (inf.getInf2().getCondInh().equals("\\nIf : --")) {
+					if (inf.getInf1().getCondInh().equals("\\nIf : --")) {
 						addLink(count + 1, count + 2,
 								inf.getDirection() + inf.getLiaison(), links);
-						addNode(count + 1, x, y, inf.getInf2().getInh()
+						addNode(count, x, y, inf.getInf1().getInh()
 								+ " = 0", out);
 						y += 50;
+						addNode(count+1, x, y, inf.getInf1().getOrd() + " = 0", out);
 						count += 1;
 					} else {
 						addLink(count + 1,
 								count + 2,
-								inf.getInf2().getCondInh().toString()
+								inf.getInf1().getCondInh().toString()
 										.replace("\\n If : ", ""), links);
-						addNode(count + 1, x, y, inf.getInf2().getInh()
+						addNode(count, x, y, inf.getInf1().getInh()
 								+ " = 1", out);
 						y += 50;
+						addNode(count+1, x, y, inf.getInf1().getOrd() + " = 0", out);
 						count += 1;
 					}
 				} else {
-					addLink(count, count + 1, inf.getInf2().getCondOrd()
+					addLink(count, count + 1, inf.getInf1().getCondOrd()
 							.toString().replace("\\n If : ", ""), links);
-					addNode(count, x, y, inf.getInf2().getOrd() + " = 1", out);
-					y += 50;
+//					y += 50;
 					// count += 1;
-					if (inf.getInf2().getCondInh().equals("\\nIf : --")) {
+					if (inf.getInf1().getCondInh().equals("\\nIf : --")) {
 						addLink(count + 1, count + 2,
 								inf.getDirection() + inf.getLiaison(), links);
-						addNode(count + 1, x, y, inf.getInf2().getInh()
+						addNode(count, x, y, inf.getInf1().getInh()
 								+ " = 0", out);
 						y += 50;
+						addNode(count+1, x, y, inf.getInf1().getOrd() + " = 1", out);
 						count += 1;
 					} else {
 						addLink(count + 1,
 								count + 2,
-								inf.getInf2().getCondInh().toString()
+								inf.getInf1().getCondInh().toString()
 										.replace("\\n If : ", ""), links);
-						addNode(count + 1, x, y, inf.getInf2().getInh()
+						addNode(count, x, y, inf.getInf1().getInh()
 								+ " = 1", out);
 						y += 50;
+						addNode(count+1, x, y, inf.getInf1().getOrd() + " = 1", out);
 						count += 1;
 					}
 				}
+				y+=50;
 				count++;
 
 			} else {

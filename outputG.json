@@ -1,17 +1,17 @@
 {"class": "go.GraphLinksModel",
 "nodeDataArray": [
-{"key": 0,"location": "500 50","step": "0 ","text": " Go_dn = 1"},
+{"key": 0,"location": "500 50","step": "0 ","text": " "},
 {"key": 1,"location": "500 100","step": "1 ","text": " Go_up = 0"},
-{"key": 2,"location": "500 150","step": "2 ","text": " "},
-{"key": 3,"location": "500 200","step": "3 ","text": " Go_up = 1"},
+{"key": 2,"location": "500 150","step": "2 ","text": " Go_dn = 1"},
+{"key": 3,"location": "500 200","step": "3 ","text": " "},
 {"key": 4,"location": "500 250","step": "4 ","text": " Go_dn = 0"},
-{"key": 5,"location": "500 300","step": "5 ","text": " "}
+{"key": 5,"location": "500 300","step": "5 ","text": " Go_up = 1"}
 ],
 "linkDataArray": [
-{"from": 0,"to": 1,"text": " ( ( ¬ ok ∧ ( ¬ Eject ) ) ∨ ( ( ( ok ) ∧ ( Eject ) ) → ↑ ebp ) )"},
-{"from": 1,"to": 2,"text": " ↑up"},
+{"from": 0,"to": 1,"text": " ↑up"},
+{"from": 1,"to": 2,"text": " ( ( ¬ ok ∧ ( ¬ Eject ) ) ∨ ( ( ( ok ) ∧ ( Eject ) ) → ↑ ebp ) )"},
 {"from": 2,"to": 3,"text": " ↓up"},
-{"from": 3,"to": 4,"text": " ( free ∧ ( ¬ Eject ) ∨ ( wpa2 ) )"},
-{"from": 4,"to": 5,"text": " ↑dn"},
+{"from": 3,"to": 4,"text": " ↑dn"},
+{"from": 4,"to": 5,"text": " ( free ∧ ( ¬ Eject ) ∨ ( wpa2 ) )"},
 {"from": 5,"to": 0,"text": " ↓dn","category": "Skip"}
 ]}
