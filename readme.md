@@ -1,7 +1,7 @@
 # MDE : Model Driven engineering 
 ## Project description
 the global schema of the project
-![Project Description](images/ProjectDescription.png)
+![Project Description](/images/ProjectDescription.png)
 
 The Local Controller is represented with plantUML.
 
