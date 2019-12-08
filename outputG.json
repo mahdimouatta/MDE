@@ -4,6 +4,7 @@
 {"key": 1,"location": "500 100","step": "1 ","text": " Go_up = 0"},
 {"key": 2,"location": "500 150","step": "2 ","text": " Go_dn = 1"},
 {"key": 3,"location": "500 200","step": "3 ","text": " "},
+{"key": 4, "category":"Start", "location": "500 250","step": "4 ","text": " Go_dn = 0"},
 {"key": 4,"location": "500 250","step": "4 ","text": " Go_dn = 0"},
 {"key": 5,"location": "500 300","step": "5 ","text": " Go_up = 1"}
 ],

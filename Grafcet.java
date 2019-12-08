@@ -3,22 +3,32 @@ public class Grafcet {
 	private int x;
 	private int y;
 	private String text;
+	private boolean Start;
 
-	
-	
-	public Grafcet(int key, int x, int y, String text) {
+	public Grafcet(int key, int x, int y, String text, boolean start) {
 		super();
 		this.key = key;
 		this.x = x;
 		this.y = y;
 		this.text = text;
+		this.Start = start;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "{\"key\": " + key + ",\"location\": \"" + x + " " + y
-				+ "\",\"step\": \"" + key + " \",\"text\": \" " + text + "\"}";
+		if (!isStart()) {
+			return "{\"key\": " + key + ",\"location\": \"" + x + " " + y
+					+ "\",\"step\": \"" + key + " \",\"text\": \" " + text
+					+ "\"}";
+
+		} else {
+			return "{\"key\": " + key
+					+ ", \"category\":\"Start\", \"location\": \"" + x + " "
+					+ y + "\",\"step\": \"" + key + " \",\"text\": \" " + text
+					+ "\"}";
+
+		}
 	}
 
 	public int getKey() {
@@ -53,5 +63,12 @@ public class Grafcet {
 		this.text = text;
 	}
 
-
+	public boolean isStart() {
+		return Start;
 	}
+
+	public void setStart(boolean start) {
+		Start = start;
+	}
+
+}
