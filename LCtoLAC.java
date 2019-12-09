@@ -732,39 +732,41 @@ public class LCtoLAC {
 		for (Infos inf : liste) {
 			if (inf.getInf1() != null) {
 				if (inf.getInf1().getCondOrd().equals("\\nIf : --")) {
-					addLink(count, count + 1,
-							inf.getDirection() + inf.getLiaison(), links);
 					// y += 50;
 					// count += 1;
 					if (inf.getInf1().getCondInh().equals("\\nIf : --")) {
+						addLink(count, count + 1, "", links);
 						addLink(count + 1, count + 2,
 								inf.getDirection() + inf.getLiaison(), links);
 						if (inf.isStart()) {
-							addNode(count, x, y, inf.getInf1().getInh()
+							addNode(count, x, y, inf.getInf1().getOrd()
 									+ " = 0", true, out);
-						}
-						addNode(count, x, y, inf.getInf1().getInh() + " = 0",
-								false, out);
+						} else
+							addNode(count, x, y, inf.getInf1().getOrd()
+									+ " = 0", false, out);
 						y += 50;
-						addNode(count + 1, x, y, inf.getInf1().getOrd()
+						addNode(count + 1, x, y, inf.getInf1().getInh()
 								+ " = 0", false, out);
-						count += 1;
+//						count += 1;
 					} else {
+						addLink(count, count + 1, inf.getInf1().getCondInh()
+								.toString().replace("\\n If : ", ""), links);
 						addLink(count + 1,
 								count + 2,
-								inf.getInf1().getCondInh().toString()
-										.replace("\\n If : ", ""), links);
-						addNode(count, x, y, inf.getInf1().getInh() + " = 1",
-								false, out);
-						y += 50;
+								inf.getDirection() + inf.getLiaison(), links);
 						if (inf.isStart()) {
 							addNode(count, x, y, inf.getInf1().getOrd()
 									+ " = 0", true, out);
-						}
-						addNode(count + 1, x, y, inf.getInf1().getOrd()
-								+ " = 0", false, out);
-						count += 1;
+						} else
+							addNode(count, x, y, inf.getInf1().getOrd()
+									+ " = 0", false, out);
+						y += 50;
+						addNode(count + 1, x, y, inf.getInf1().getInh()
+								+ " = 1", false, out);
+//						count += 1;
 					}
+					y += 50;
+					count++;
 				} else {
 					addLink(count, count + 1, inf.getInf1().getCondOrd()
 							.toString().replace("\\n If : ", ""), links);
@@ -776,9 +778,9 @@ public class LCtoLAC {
 						if (inf.isStart()) {
 							addNode(count, x, y, inf.getInf1().getInh()
 									+ " = 0", true, out);
-						}
-						addNode(count, x, y, inf.getInf1().getInh() + " = 0",
-								false, out);
+						} else
+							addNode(count, x, y, inf.getInf1().getInh()
+									+ " = 0", false, out);
 						y += 50;
 						addNode(count + 1, x, y, inf.getInf1().getOrd()
 								+ " = 1", false, out);
@@ -791,9 +793,9 @@ public class LCtoLAC {
 						if (inf.isStart()) {
 							addNode(count, x, y, inf.getInf1().getOrd()
 									+ " = 1", true, out);
-						}
-						addNode(count, x, y, inf.getInf1().getInh() + " = 1",
-								false, out);
+						} else
+							addNode(count, x, y, inf.getInf1().getInh()
+									+ " = 1", false, out);
 						y += 50;
 						addNode(count + 1, x, y, inf.getInf1().getOrd()
 								+ " = 1", false, out);
@@ -806,7 +808,10 @@ public class LCtoLAC {
 			} else {
 				addLink(count, count + 1,
 						inf.getDirection() + inf.getLiaison(), links);
-				addNode(count, x, y, "", false, out);
+				if (inf.isStart()) {
+					addNode(count, x, y, "", true, out);
+				} else
+					addNode(count, x, y, "", false, out);
 				y += 50;
 				count += 1;
 			}
