@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,7 +22,7 @@ public class LCtoLAC {
 	 *            mergeable
 	 * @return if the $liason starts with an upperCase character it returns true
 	 */
-	private static boolean isMergeable(Infos infos) {
+	protected static boolean isMergeable(Infos infos) {
 		boolean out = false;
 		if (Character.isUpperCase(infos.getLiaison().charAt(0))) {
 			out = true;
@@ -37,7 +38,7 @@ public class LCtoLAC {
 	 * 
 	 * @return out of type InfosLAC containing the new node, only the node
 	 */
-	private static Infos merge2(Infos info, List<Infos> infos) {
+	protected static Infos merge2(Infos info, List<Infos> infos) {
 		Infos infoOut = new Infos();
 		if (info.isStart()) {
 			infoOut.setStart(true);
@@ -97,7 +98,7 @@ public class LCtoLAC {
 	 * @return out of type InfosLAC containing the new node, only the node
 	 */
 	/*
-	 * private static InfosLAC merge(Infos info) { InfosLAC out = new
+	 * protected static InfosLAC merge(Infos info) { InfosLAC out = new
 	 * InfosLAC(null, null); if (info.getDirection().equals(up)) {
 	 * out.setOrd(info.getLiaison()); } else { out.setInh(info.getLiaison()); }
 	 * 
@@ -114,7 +115,7 @@ public class LCtoLAC {
 	 * one.
 	 */
 
-	private static List<Infos> mergeRecur(List<Infos> infos) {
+	protected static List<Infos> mergeRecur(List<Infos> infos) {
 
 		List<Infos> out = mergeAll(infos);
 		if (out.size() != 0) {
@@ -134,7 +135,7 @@ public class LCtoLAC {
 	 * @return out of type List<Infos> containing the new Infos list with no
 	 * unlinked nodes
 	 */
-	private static List<Infos> completeList(List<Infos> infos) {
+	protected static List<Infos> completeList(List<Infos> infos) {
 		String a = null;
 		for (int j = 0; j < infos.size(); j++) {
 			a = infos.get(j).getNode2().toString();
@@ -167,9 +168,9 @@ public class LCtoLAC {
 	 * @return void, it only changes the boolean parameter start in the Infos
 	 * object to indicate the start.
 	 */
-	private static void findStart(List<Infos> lines, String name) {
+	protected static void findStart(List<Infos> lines, String name) throws IOException{
 		String line = null;
-		try {
+//		try {
 			FileReader input = new FileReader(name);
 			bufRead = new BufferedReader(input);
 			while ((line = bufRead.readLine()) != null) {
@@ -190,9 +191,9 @@ public class LCtoLAC {
 					}
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/*
@@ -204,7 +205,7 @@ public class LCtoLAC {
 	 * @return void, it only changes the boolean parameter start in the Infos
 	 * object to indicate the start.
 	 */
-	private static List<Infos> mergeAll(List<Infos> infos) {
+	protected static List<Infos> mergeAll(List<Infos> infos) {
 		List<Infos> out = new ArrayList<Infos>();
 		int i = 0;
 		while (i < infos.size()) {
@@ -246,7 +247,7 @@ public class LCtoLAC {
 	 *            the name of the first node
 	 * @return node2 the next node
 	 */
-	private static List<Infos> find2ndNode(Object node1, List<Infos> infos) {
+	protected static List<Infos> find2ndNode(Object node1, List<Infos> infos) {
 		List<Infos> out = new ArrayList<Infos>();
 		for (int i = 0; i < infos.size(); i++) {
 			if (infos.get(i).getNode1().equals(node1)) {
@@ -269,7 +270,7 @@ public class LCtoLAC {
 	 * @return node1 the previous node
 	 */
 	/*
-	 * private static List<Infos> find1stNode(Object node2, List<Infos> infos) {
+	 * protected static List<Infos> find1stNode(Object node2, List<Infos> infos) {
 	 * List<Infos> out = new ArrayList<Infos>(); for (int i = 0; i <
 	 * infos.size(); i++) { if (infos.get(i).getNode2().equals(node2)) {
 	 * out.add(infos.get(i)); } }
@@ -285,7 +286,7 @@ public class LCtoLAC {
 	 *            the line to check
 	 * @return true if it contains nodes, false otherwise
 	 */
-	private static boolean hasInfos(String line) {
+	protected static boolean hasInfos(String line) {
 		boolean test = false;
 		String line1 = deleteSpace(line);
 		if (line1.startsWith("(") && line1.contains(":")) {
@@ -302,10 +303,10 @@ public class LCtoLAC {
 	 * @return ArrayList<String> containing all the lines
 	 */
 
-	private static List<String> readLines(String name) {
+	protected static List<String> readLines(String name) throws IOException {
 		List<String> lines = new ArrayList<>();
 		String line = null;
-		try {
+//		try {
 			FileReader input = new FileReader(name);
 			bufRead = new BufferedReader(input);
 			while ((line = bufRead.readLine()) != null) {
@@ -315,9 +316,9 @@ public class LCtoLAC {
 					// System.out.println(line);
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 		return lines;
 	}
@@ -329,7 +330,7 @@ public class LCtoLAC {
 	 *            the line as a string
 	 * @return String without space
 	 */
-	private static String deleteSpace(String line) {
+	protected static String deleteSpace(String line) {
 		char[] a = line.toCharArray();
 		String s;
 		if (line.startsWith(" ")) {
@@ -354,7 +355,7 @@ public class LCtoLAC {
 	 *            the line to extract from
 	 * @return String from $from to $to
 	 */
-	private static String getLineFromTo(String from, String to, String line) {
+	protected static String getLineFromTo(String from, String to, String line) {
 		char[] elts = line.toCharArray();
 
 		String out;
@@ -397,7 +398,7 @@ public class LCtoLAC {
 	 * @return Infos containing all the necessary informations
 	 */
 
-	private static Infos getLineInfos(String line) {
+	protected static Infos getLineInfos(String line) {
 		Infos infos = null;
 		String[] content = line.split(":");
 		// System.out.println(content[0]);
@@ -422,7 +423,7 @@ public class LCtoLAC {
 	 *            a string array of lines
 	 * @return List<Infos> containing all the infos as Infos format
 	 */
-	private static List<Infos> extractInfos(List<String> lines) {
+	protected static List<Infos> extractInfos(List<String> lines) {
 		Infos info = null;
 		List<Infos> infos = new ArrayList<Infos>();
 		String line = null;
@@ -443,12 +444,12 @@ public class LCtoLAC {
 	 *            a list of Infos.
 	 * @return void
 	 */
-	private static void writeToFile(List<Infos> lines) {
+	protected static void writeToFile(List<Infos> lines) throws IOException{
 		FileWriter writer;
 		String header1 = "@startuml";
 		String header2 = "left to right direction";
 		String footer = "@enduml";
-		try {
+//		try {
 			writer = new FileWriter("src/output.txt");
 			writer.write(header1 + System.lineSeparator());
 			writer.write(header2 + System.lineSeparator());
@@ -467,10 +468,10 @@ public class LCtoLAC {
 			}
 			writer.write(footer + System.lineSeparator());
 			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -484,7 +485,7 @@ public class LCtoLAC {
 	 * transformation
 	 */
 
-	private static List<Infos> process(String inputFile) {
+	protected static List<Infos> process(String inputFile) throws IOException {
 
 		List<String> lines = readLines("src/" + inputFile);
 		List<Infos> infos = extractInfos(lines);
@@ -515,12 +516,12 @@ public class LCtoLAC {
 	 * 
 	 * @return List<Constraint> list of constraints
 	 */
-	private static List<Constraint> parseGC(String name) {
+	protected static List<Constraint> parseGC(String name) throws IOException{
 		List<Constraint> a = new ArrayList<Constraint>();
 
 		String line = null;
 
-		try {
+//		try {
 			FileReader input = new FileReader(name);
 			bufRead = new BufferedReader(input);
 			while ((line = bufRead.readLine()) != null) {
@@ -536,10 +537,9 @@ public class LCtoLAC {
 			}
 			return a;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return a;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -553,8 +553,8 @@ public class LCtoLAC {
 	 * 
 	 * @return List<Infos> the list of DC model elements.
 	 */
-	private static List<Infos> LACtoDC(List<Infos> liste,
-			List<Constraint> contraintes) {
+	protected static List<Infos> LACtoDC(List<Infos> liste,
+			List<Constraint> contraintes) throws IOException{
 		for (int i = 0; i < liste.size(); i++) {
 			for (Constraint c : contraintes) {
 				if (liste.get(i).getInf1() != null) {
@@ -634,13 +634,13 @@ public class LCtoLAC {
 	 * @return void
 	 */
 
-	private static void writeToFile2(List<Infos> lines) {
+	protected static void writeToFile2(List<Infos> lines) throws IOException{
 
 		FileWriter writer;
 		String header1 = "@startuml";
 		String header2 = "left to right direction";
 		String footer = "@enduml";
-		try {
+//		try {
 			writer = new FileWriter("src/outputDC.txt");
 			writer.write(header1 + System.lineSeparator());
 			writer.write(header2 + System.lineSeparator());
@@ -661,10 +661,10 @@ public class LCtoLAC {
 			}
 			writer.write(footer + System.lineSeparator());
 			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -682,7 +682,7 @@ public class LCtoLAC {
 	 * 
 	 * @return void.
 	 */
-	private static void addLink(int from, int to, String text, List<Link> list) {
+	protected static void addLink(int from, int to, String text, List<Link> list) {
 		Link link = new Link(from, to, text.replace("<&chevron-left>", "(")
 				.replace("<&chevron-right>", ")").replace("<&arrow-top>", "↑")
 				.replace("<&chevron-bottom>", "∨")
@@ -708,7 +708,7 @@ public class LCtoLAC {
 	 * 
 	 * @return void.
 	 */
-	private static void addNode(int key, int x, int y, String text,
+	protected static void addNode(int key, int x, int y, String text,
 			boolean start, List<Grafcet> list) {
 		Grafcet grafcet = new Grafcet(key, x, y, text, start);
 		list.add(grafcet);
@@ -721,7 +721,7 @@ public class LCtoLAC {
 	 * 
 	 * @return GrafcetOut an object with a list of Nodes and a list of Links.
 	 */
-	private static GrafcetOut DCtoGrafcet(List<Infos> liste) { // TODO : a
+	protected static GrafcetOut DCtoGrafcet(List<Infos> liste) throws IOException { // TODO : a
 																// verifier
 		List<Grafcet> out = new ArrayList<Grafcet>();
 		List<Link> links = new ArrayList<Link>();
@@ -818,8 +818,12 @@ public class LCtoLAC {
 		}
 		links.get(links.size() - 1).setSkip(true);
 		links.get(links.size() - 1).setTo(0);
+		
+		GrafcetOut output = new GrafcetOut(out, links);;
+		writeToFile3(output);
 
-		return new GrafcetOut(out, links);
+
+		return output;
 
 	}
 
@@ -833,13 +837,13 @@ public class LCtoLAC {
 	 * @return void
 	 */
 
-	private static void writeToFile3(GrafcetOut lines) {
+	protected static void writeToFile3(GrafcetOut lines) throws IOException{
 
 		FileWriter writer;
 		String header1 = "{\"class\": \"go.GraphLinksModel\",";
 		String header2 = "\"nodeDataArray\": [";
 		String header3 = "\"linkDataArray\": [";
-		try {
+//		try {
 			writer = new FileWriter("src/outputG.json");
 			writer.write(header1 + System.lineSeparator());
 			writer.write(header2 + System.lineSeparator());
@@ -860,14 +864,14 @@ public class LCtoLAC {
 					+ System.lineSeparator());
 			writer.write("]}" + System.lineSeparator());
 			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		/*
 		 * File file = new File("/"); for(String fileNames : file.list())
 		 * System.out.println(fileNames);
@@ -885,7 +889,6 @@ public class LCtoLAC {
 
 		GrafcetOut grafcets = DCtoGrafcet(listeDC);
 
-		writeToFile3(grafcets);
 
 	}
 }

@@ -1,3 +1,4 @@
+package main;
 public class InfosLAC extends Object {
 	private Object Ord;
 	private Object Inh;

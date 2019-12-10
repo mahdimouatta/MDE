@@ -1,3 +1,4 @@
+package main;
 
 public class Link {
 		private int from;

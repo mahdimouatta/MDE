@@ -1,3 +1,4 @@
+package main;
 public class Grafcet {
 	private int key;
 	private int x;
